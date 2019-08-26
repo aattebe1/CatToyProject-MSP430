@@ -1,0 +1,163 @@
+#include "msp430.h"                         ; #define controlled include file
+
+            PUBLIC  Pattern                 ; make the Random label visible
+                                            ; outside this module                                           
+
+            RSEG    CODE                    ; place program in 'CODE' segment
+            
+Pattern:    CMP     #00h, R15               ; check if R15 is 0
+            JNZ     pattern0                ; jump if R15 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #02h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+            
+pattern0:   MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #01h, R14               ; subtract 1 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern1                ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #04h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern1:   MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #02h, R14               ; subtract 2 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern2                ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #01h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern2:   MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #03h, R14               ; subtract 3 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern3                ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #04h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern3:   MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #04h, R14               ; subtract 4 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern4                ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #01h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern4:   MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #05h, R14               ; subtract 5 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern5                ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #02h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern5:   MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #06h, R14               ; subtract 6 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern6                ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #04h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern6:   MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #07h, R14               ; subtract 7 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern7                ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #02h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern7:   MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #08h, R14               ; subtract 8 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern8                ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #01h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern8:   MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #09h, R14               ; subtract 9 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern9                ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #04h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern9:   MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #0Ah, R14               ; subtract 10 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern10               ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #02h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern10:  MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #0Bh, R14               ; subtract 11 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern11               ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #04h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern11:  MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #0Ch, R14               ; subtract 12 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern12               ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #01h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern12:  MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #0Dh, R14               ; subtract 13 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern13               ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #04h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern13:  MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #0Eh, R14               ; subtract 14 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern14               ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #02h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern14:  MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #0Fh, R14               ; subtract 15 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern15               ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #01h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern15:  MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #10h, R14               ; subtract 16 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern16               ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #02h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern16:  MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #11h, R14               ; subtract 17 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern17               ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #04h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern17:  MOV.W   R15, R14                ; copy R15 to R14
+            SUB.W   #12h, R14               ; subtract 18 from R14
+            CMP     #00h, R14               ; check if R14 is 0
+            JNZ     pattern18               ; jump if R14 is not 0
+            ADD.W   #01h, R15               ; increment R15
+            MOV.W   #01h, R13               ; set R13
+            JMP     pattern19               ; jump to end of subroutine
+
+pattern18:  MOV.W   #04h, R13               ; set R13
+            CLR     R15                     ; reset R15
+
+pattern19:  RET
+
+            END

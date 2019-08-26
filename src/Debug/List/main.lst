@@ -1,0 +1,134 @@
+####################################################################################################
+#                                                                                                  #
+#     IAR Assembler V7.12.1.987/W32  for MSP430 03/Dec/2018  17:44:44                              #
+#     Copyright 1996-2018 IAR Systems AB.                                                          #
+#                                                                                                  #
+#           Target option =  MSP430                                                                #
+#           Source file   =  C:\CatToyProject-MSP430\src\main.s43                                  #
+#           List file     =  C:\CatToyProject-MSP430\src\Debug\List\main.lst                       #
+#           Object file   =  C:\CatToyProject-MSP430\src\Debug\Obj\main.r43                        #
+#           Command line  =  -f                                                                    #
+#                            C:\Users\Austin\AppData\Local\Temp\EW76C5.tmp                         #
+#                            (C:\CatToyProject-MSP430\src\main.s43                                 #
+#                            -OC:\CatToyProject-MSP430\src\Debug\Obj                               #
+#                            -s+ -M<> -w+                                                          #
+#                            -LC:\CatToyProject-MSP430\src\Debug\List                              #
+#                            -t8 -r -D__MSP430G2533__                                              #
+#                            -IC:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\430\INC\) #
+#                                                                                                  #
+####################################################################################################
+
+      1    00FFFE              #include "msp430.h"                         ;
+                                #define controlled include file
+      2    00FFFE              
+      3    00FFFE                          NAME    main                    ;
+                                module name
+      4    00FFFE              
+      5    000000                          PUBLIC  main                    ;
+  make the main label visible
+      6    00FFFE                                                          ;
+                                outside this module
+      7    00FFFE              
+      8    000000                          EXTERN  Pattern
+      9    00FFFE              
+     10    00FFFE                          ORG     0FFFEh
+     11    00FFFE ....                     DC16    init                    ;
+                                                     set reset vector to 'init'
+                                                     label
+     12    010000              
+     13    000000                          RSEG    CSTACK                  ;
+  pre-declaration of segment
+     14    000000                          RSEG    CODE                    ;
+  place program in 'CODE' segment
+     15    000000              
+     16    000000 3140....     init:       MOV     #SFE(CSTACK), SP        ;
+                                                                set up
+                                                                stack
+     17    000004              
+     18    000004 B240805A2001 main:       MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ;
+  stop watchdog timer
+     19    00000A D0C3....                 BIC.B   #01h, P1OUT             ;
+  set P1.0 low
+     20    00000E E0C3....                 BIC.B   #02h, P1OUT             ;
+  set P1.1 low
+     21    000012 E0C2....                 BIC.B   #04h, P1OUT             ;
+  set P1.2 low
+     22    000016 D2D32200                 BIS.B   #01h, &P1DIR            ;
+  set P1.0 to output
+     23    00001A E2D32200                 BIS.B   #02h, &P1DIR            ;
+  set P1.1 to output
+     24    00001E E2D22200                 BIS.B   #04h, &P1DIR            ;
+  set P1.2 to output
+     25    000022 0443                     CLR     R4                      ;
+  clear R4
+     26    000024 0543                     CLR     R5                      ;
+  clear R5
+     27    000026 0643                     CLR     R6                      ;
+  clear R6
+     28    000028 0743                     CLR     R7                      ;
+  clear R7
+     29    00002A 0843                     CLR     R8                      ;
+  clear R8
+     30    00002C 0943                     CLR     R9                      ;
+  clear R9
+     31    00002E 0A43                     CLR     R10                     ;
+  clear R10
+     32    000030 0B43                     CLR     R11                     ;
+  clear R11
+     33    000032 0C43                     CLR     R12                     ;
+  clear R12
+     34    000034 0D43                     CLR     R13                     ;
+  clear R13
+     35    000036 0E43                     CLR     R14                     ;
+  clear R14
+     36    000038 0F43                     CLR     R15                     ;
+  clear R15
+     37    00003A F2D020005300             BIS.B   #LFXT1S_2, &BCSCTL3     ;
+  set register value
+     38    000040 E2C30200                 BIC.B   #OFIFG, &IFG1           ;
+  clear OSC flag
+     39    000044 32D0C000                 BIS.W   #SCG0+SCG1, SR          ;
+  set system clock generators
+     40    000048 F0D0C000....             BIS.B   #SELM_3, BCSCTL2        ;
+  set MCLK source
+     41    00004E B24010006201             MOV.W   #CCIE,&TACCTL0          ;
+  TACCR0 interrupt enabled
+     42    000054 B240A08C7201             MOV.W   #8CA0h,&TACCR0          ;
+  Setup count value
+     43    00005A B24010016001             MOV.W   #TASSEL_1+MC_1,&TACTL   ;
+  choose ACLK, count up mode
+     44    000060 32D01800                 BIS.W   #CPUOFF+GIE,SR          ;
+  CPU off, interrupts enabled
+     45    000064              
+     46    000064 FF3F                     JMP     $                       ;
+                                                    jump to current location
+                                                    '$'
+     47    000066                                                          ;
+                                (endless loop)
+     48    000066              
+     49    000066 B012....     TA0_ISR:    CALL    #Pattern                ;
+  get output setting
+     50    00006A C24D2100                 MOV.B   R13, &P1OUT             ;
+                                                         set output
+     51    00006E 0013                     RETI                            ;
+  return from interrupt
+     52    000070              
+     53    000000                          COMMON  INTVEC                  ;
+  Interrupt Vectors
+     54    000012                          ORG     TIMER0_A0_VECTOR        ;
+  Timer_A0 Vector
+     55    000012 ....                     DW      TA0_ISR                 ;
+                                                     define a word with value
+                                                     TA0_ISR
+     56    000014              
+     57    000014                          END
+##############################
+#          CRC:624B          #
+#        Errors:   0         #
+#        Warnings: 0         #
+#         Bytes: 116         #
+##############################
+
+
+
+

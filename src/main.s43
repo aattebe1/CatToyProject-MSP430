@@ -1,0 +1,57 @@
+#include "msp430.h"                         ; #define controlled include file
+
+            NAME    main                    ; module name
+
+            PUBLIC  main                    ; make the main label visible
+                                            ; outside this module
+
+            EXTERN  Pattern
+
+            ORG     0FFFEh
+            DC16    init                    ; set reset vector to 'init' label
+
+            RSEG    CSTACK                  ; pre-declaration of segment
+            RSEG    CODE                    ; place program in 'CODE' segment
+
+init:       MOV     #SFE(CSTACK), SP        ; set up stack
+
+main:       MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; stop watchdog timer
+            BIC.B   #01h, P1OUT             ; set P1.0 low
+            BIC.B   #02h, P1OUT             ; set P1.1 low
+            BIC.B   #04h, P1OUT             ; set P1.2 low
+            BIS.B   #01h, &P1DIR            ; set P1.0 to output
+            BIS.B   #02h, &P1DIR            ; set P1.1 to output
+            BIS.B   #04h, &P1DIR            ; set P1.2 to output
+            CLR     R4                      ; clear R4
+            CLR     R5                      ; clear R5
+            CLR     R6                      ; clear R6
+            CLR     R7                      ; clear R7
+            CLR     R8                      ; clear R8
+            CLR     R9                      ; clear R9
+            CLR     R10                     ; clear R10
+            CLR     R11                     ; clear R11
+            CLR     R12                     ; clear R12
+            CLR     R13                     ; clear R13
+            CLR     R14                     ; clear R14
+            CLR     R15                     ; clear R15
+            BIS.B   #LFXT1S_2, &BCSCTL3     ; set register value
+            BIC.B   #OFIFG, &IFG1           ; clear OSC flag
+            BIS.W   #SCG0+SCG1, SR          ; set system clock generators
+            BIS.B   #SELM_3, BCSCTL2        ; set MCLK source
+            MOV.W   #CCIE,&TACCTL0          ; TACCR0 interrupt enabled
+            MOV.W   #8CA0h,&TACCR0          ; Setup count value
+            MOV.W   #TASSEL_1+MC_1,&TACTL   ; choose ACLK, count up mode
+            BIS.W   #CPUOFF+GIE,SR          ; CPU off, interrupts enabled
+
+            JMP     $                       ; jump to current location '$'
+                                            ; (endless loop)
+
+TA0_ISR:    CALL    #Pattern                ; get output setting
+            MOV.B   R13, &P1OUT             ; set output
+            RETI                            ; return from interrupt
+
+            COMMON  INTVEC                  ; Interrupt Vectors
+            ORG     TIMER0_A0_VECTOR        ; Timer_A0 Vector
+            DW      TA0_ISR                 ; define a word with value TA0_ISR
+
+            END
